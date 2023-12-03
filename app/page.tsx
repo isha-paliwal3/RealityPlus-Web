@@ -12,7 +12,7 @@ export default function Home() {
               <div className="lg:px-20">
                 <h5 className="text-900 text-2xl md:text-4xl lg:text-4xl xl:text-6xl">WELCOME TO THE EDGE OF TOMORROW</h5>
                 <p className="py-[50px] sm:text-sm lg:text-xl">
-                  Delve into the world of artificial intelligence and augmented reality. Our next-gen AR assistant is here to break the barriers between the virtual and real world. Life’s about to get really exciting!
+                  Delve into the world of artificial intelligence and augmented reality. Our next-gen AR assistant is here to break the barriers between the virtual and real world. Life&apos;s about to get really exciting!
                   <Link href="/login">
                     <button className="hidden md:block bg-orng-100 hover:bg-orng-200 text-white font-bold py-2 px-4 rounded-lg mt-4 transition duration-300 ease-in-out transform hover:scale-105">Try Now</button>
                   </Link>
