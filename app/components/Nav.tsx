@@ -44,7 +44,7 @@ const Nav: React.FC = () => {
 
   return (
     <div className={`fixed top-0 left-0 w-full z-50 h-[12vh] flex justify-between items-center ${isScrolled ? 'backdrop-blur-md bg-violet/30' : 'bg-transparent'}`}>
-      <Link href="/"><Image className='w-[125px] md:w-[250px] ml-10' src="/Logo.png" alt="Logo" /></Link>
+      <Link href="/"><Image  width={400} height={200} className='w-[125px] md:w-[250px] ml-10' src="/Logo.png" alt="Logo" /></Link>
       <ul className='hidden mr-10 text-white md:flex gap-5 md:gap-10 sm:text-[12px] md:text-lg '>
         <li className="my-1 hover:underline transition duration-300 ease-in-out transform hover:scale-105"><Link href="/">Home</Link></li>
         {isLoggedIn === true ? (

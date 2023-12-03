@@ -8,7 +8,7 @@ const page = () => {
             <h2 className="text-3xl font-bold text-center mb-3">Ready To Bring Your Assistant to Life?</h2>
             <h4 className="text-xl">Fill This form and create magic</h4>
             <div className='flex flex-col md:flex-row  justify-center items-center w-[80%]'>
-                <Image className='w-[300px] md:w-[30%]' src="/generate.png" alt="" />
+                <Image  width={400} height={200} className='w-[300px] md:w-[30%]' src="/generate.png" alt="" />
                 <div className=' p-[2rem] min-w-[300px] md:w-[50%] md:px-[5rem]'>
                     <GenerteAssistant />
                 </div>
