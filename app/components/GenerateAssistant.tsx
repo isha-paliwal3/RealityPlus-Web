@@ -27,7 +27,6 @@ const GenerteAssistant: React.FC = () => {
 
     });
 
-    
     useEffect(() => {
         const token = Cookies.get('token');
         if (token) {
@@ -37,7 +36,7 @@ const GenerteAssistant: React.FC = () => {
             }
         }
     }, []);
-    
+
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -46,7 +45,6 @@ const GenerteAssistant: React.FC = () => {
             [name]: value,
         });
     };
-    
     //{ const fileInputRef = useRef<HTMLInputElement>(null);
     // const [newSkill, setNewSkill] = useState('');
     // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -116,28 +114,30 @@ const GenerteAssistant: React.FC = () => {
     //         }
     //     }
     // };_
-   
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         console.log(formData);
-    
+
         const payload = {
-            Instruction: `your name is ${formData.name} your special skills include ${formData.specialSkills} and your story is ${formData.backStory}`
+            instructions: `your name is ${formData.name} your special skills include ${formData.specialSkills} and your backstory is ${formData.backStory}`
         };
-    
+
         try {
-            const response = await axios.post('/api/createAssistant', payload);
+            const response = await axios.post('https://reality-plus-flask.vercel.app/createAssistant', payload);
             console.log('Form submitted:', payload);
-    
-            const { assistantID } = response.data;
-    
+
+            const assistant_id = response.data.assistant_id;
+
+
             const assistantData = {
-                assistants: {
-                    ...formData,
-                    assistantID: assistantID
-                }
+
+                ...formData,
+                assistant_id: assistant_id
+
             };
-    
+            console.log(assistantData)
+
             await axios.post('/api/generateAssistant', assistantData);
             console.log('Assistant data updated:', assistantData);
         } catch (error) {
@@ -149,7 +149,7 @@ const GenerteAssistant: React.FC = () => {
             }
         }
     };
-    
+
     // const handleSubmit = async (e: FormEvent) => {
     //     e.preventDefault();
     //     console.log(formData)
@@ -192,7 +192,7 @@ const GenerteAssistant: React.FC = () => {
                         className="border hover:outline-none rounded-lg p-2 w-full bg-inherit"
                         required
                     />
-                    
+
                 </div>
 
                 <div className="mb-4">
