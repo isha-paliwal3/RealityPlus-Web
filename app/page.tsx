@@ -58,7 +58,7 @@ export default function Home() {
           <div className="section md:flex flex-col gap-10 items-center font-Raleway w-[100%] lg:px-20 mt-20 mb-20">
             <h5 className="text-900 text-2xl md:text-4xl lg:text-4xl xl:text-6xl text-center">AI AR Fusion</h5>
             <Image  width={400} height={200} className="md:w-[35%] mb-10 md:mb-0" src="/AIAR1.png" alt="Img" />
-            <p className="py-[10px] sm:text-sm lg:text-xl">It's not just tech, it&apos;s the future. We have woven the complexities of AI, machine learning, and AR into your friendly assistant, crafting an unparalleled experience. This fusion brings together the intricacies of artificial intelligence, the adaptability of machine learning, and the immersive visuals of augmented reality, creating a smart, intuitive, and interactive companion. </p>
+            <p className="py-[10px] sm:text-sm lg:text-xl">It&apos;s not just tech, it&apos;s the future. We have woven the complexities of AI, machine learning, and AR into your friendly assistant, crafting an unparalleled experience. This fusion brings together the intricacies of artificial intelligence, the adaptability of machine learning, and the immersive visuals of augmented reality, creating a smart, intuitive, and interactive companion. </p>
           </div>
           <div className="section md:flex flex-col gap-10 items-center w-[100%] lg:px-20 mt-20 mb-20">
             <h5 className="text-900 text-2xl md:text-4xl lg:text-4xl xl:text-6xl text-center mb-10">Sign Up Now and Get your Assistant</h5>
