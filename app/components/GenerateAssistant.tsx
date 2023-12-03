@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 interface FormData {
     user: string,
     name: string;
-    specialSkills: string[];
+    specialSkills: string;
     backStory: string;
     // file: File | null;
     // fileError: string;
@@ -15,22 +15,19 @@ interface FormData {
 
 import jwt from 'jsonwebtoken';
 
-// ...rest of your imports
-
 const GenerteAssistant: React.FC = () => {
     const [user, setUser] = useState('');
     const [formData, setFormData] = useState<FormData>({
         user:'',
         name: '',
-        specialSkills: [],
+        specialSkills: '',
         backStory: '',
         // file: null,
         // fileError: '',
 
     });
 
-    const [newSkill, setNewSkill] = useState('');
-
+    
     useEffect(() => {
         const token = Cookies.get('token');
         if (token) {
@@ -40,9 +37,7 @@ const GenerteAssistant: React.FC = () => {
             }
         }
     }, []);
-
-    // const fileInputRef = useRef<HTMLInputElement>(null);
-
+    
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -51,7 +46,9 @@ const GenerteAssistant: React.FC = () => {
             [name]: value,
         });
     };
-
+    
+    //{ const fileInputRef = useRef<HTMLInputElement>(null);
+    // const [newSkill, setNewSkill] = useState('');
     // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     //     if (e.target.files) {
     //         const file = e.target.files[0];
@@ -76,45 +73,73 @@ const GenerteAssistant: React.FC = () => {
     //     }
     // };
 
-    const handleSkillInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewSkill(e.target.value);
-    };
-
-    const addSkill = () => {
-        if (newSkill && !formData.specialSkills.includes(newSkill)) {
-            setFormData({
-                ...formData,
-                specialSkills: [...formData.specialSkills, newSkill]
-            });
-            setNewSkill('');
-        }
-    };
-
-    const removeSkill = (skillToRemove: string) => {
-        setFormData({
-            ...formData,
-            specialSkills: formData.specialSkills.filter(skill => skill !== skillToRemove)
-        });
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            addSkill();
-        }
-    };
-
-    // const handleSubmit = (e: FormEvent) => {
-    //     e.preventDefault();
-    //     console.log('Form submitted:', formData);
+    // const handleSkillInput = (e: ChangeEvent<HTMLInputElement>) => {
+    //     setNewSkill(e.target.value);
     // };
 
+    // const addSkill = () => {
+    //     if (newSkill && !formData.specialSkills.includes(newSkill)) {
+    //         setFormData({
+    //             ...formData,
+    //             specialSkills: [...formData.specialSkills, newSkill]
+    //         });
+    //         setNewSkill('');
+    //     }
+    // };
+
+    // const removeSkill = (skillToRemove: string) => {
+    //     setFormData({
+    //         ...formData,
+    //         specialSkills: formData.specialSkills.filter(skill => skill !== skillToRemove)
+    //     });
+    // };
+
+    // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    //     if (e.key === 'Enter') {
+    //         e.preventDefault();
+    //         addSkill();
+    //     }
+    // };
+
+    // const handleSubmit = async (e: FormEvent) => {
+    //     e.preventDefault();
+    //     console.log(formData)
+    //     try {
+    //         const response = await axios.post('/api/generateAssistant', formData);
+    //         console.log('Form submitted:', formData);
+    //     } catch (error) {
+    //         if (axios.isAxiosError(error)) {
+    //             const axiosError = error as AxiosError;
+    //             console.error('Generating error:', axiosError.response?.data || axiosError.message);
+    //         } else {
+    //             console.error('An unexpected error occurred:', error);
+    //         }
+    //     }
+    // };_
+   
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log(formData)
+        console.log(formData);
+    
+        const payload = {
+            Instruction: `your name is ${formData.name} your special skills include ${formData.specialSkills} and your story is ${formData.backStory}`
+        };
+    
         try {
-            const response = await axios.post('/api/generateAssistant', formData);
-            console.log('Form submitted:', formData);
+            const response = await axios.post('/api/createAssistant', payload);
+            console.log('Form submitted:', payload);
+    
+            const { assistantID } = response.data;
+    
+            const assistantData = {
+                assistants: {
+                    ...formData,
+                    assistantID: assistantID
+                }
+            };
+    
+            await axios.post('/api/generateAssistant', assistantData);
+            console.log('Assistant data updated:', assistantData);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError;
@@ -124,6 +149,22 @@ const GenerteAssistant: React.FC = () => {
             }
         }
     };
+    
+    // const handleSubmit = async (e: FormEvent) => {
+    //     e.preventDefault();
+    //     console.log(formData)
+    //     try {
+    //         const response = await axios.post('/api/generateAssistant', formData);
+    //         console.log('Form submitted:', formData);
+    //     } catch (error) {
+    //         if (axios.isAxiosError(error)) {
+    //             const axiosError = error as AxiosError;
+    //             console.error('Generating error:', axiosError.response?.data || axiosError.message);
+    //         } else {
+    //             console.error('An unexpected error occurred:', error);
+    //         }
+    //     }
+    // };
 
     return (
         <>
@@ -144,18 +185,14 @@ const GenerteAssistant: React.FC = () => {
                 <div className="mb-4 relative">
                     <input
                         type="text"
+                        name="specialSkills"
                         placeholder="Special skills for Your assistant*"
-                        value={newSkill}
-                        onChange={handleSkillInput}
-                        onKeyDown={handleKeyDown}
+                        value={formData.specialSkills}
+                        onChange={handleInputChange}
                         className="border hover:outline-none rounded-lg p-2 w-full bg-inherit"
+                        required
                     />
-                    {formData.specialSkills.map(skill => (
-                        <span key={skill} className="inline-block bg-gray-200 rounded-full px-3 py-1 mt-2 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                            {skill}
-                            <button type="button" onClick={() => removeSkill(skill)} className="ml-2 text-red-500">&times;</button>
-                        </span>
-                    ))}
+                    
                 </div>
 
                 <div className="mb-4">

@@ -1,5 +1,6 @@
 import React from 'react'
 import Login from '../components/Login'
+import Image from 'next/image'
 
 const page = () => {
     return (
@@ -7,7 +8,7 @@ const page = () => {
             <div className='border-solid border-fuchsia-600 border-4 rounded-lg p-[2rem] min-w-[300px] md:w-[38%] md:p-[5rem]'>
                 <Login />
             </div>
-            <img className="md:w-[40%]" src="/Lock.png" alt="Img" />
+            <Image className="md:w-[40%]" src="/Lock.png" alt="Img" />
         </div>
     )
 }

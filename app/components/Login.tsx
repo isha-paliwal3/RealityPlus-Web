@@ -78,7 +78,7 @@ const Login: React.FC = () => {
                     </button>
                 </div>
                 <div>
-                    <p className='text-center p-2'>Don't Have an Account? <Link href='/signup' className='underline'>SignUp</Link></p>
+                    <p className='text-center p-2'>Don&apos;t Have an Account? <Link href='/signup' className='underline'>SignUp</Link></p>
                 </div>
             </form>
         </>
