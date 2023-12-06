@@ -117,7 +117,6 @@ const GenerteAssistant: React.FC = () => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log(formData);
 
         const payload = {
             instructions: `your name is ${formData.name} your special skills include ${formData.specialSkills} and your backstory is ${formData.backStory}`
@@ -131,12 +130,9 @@ const GenerteAssistant: React.FC = () => {
 
 
             const assistantData = {
-
                 ...formData,
                 assistant_id: assistant_id
-
             };
-            console.log(assistantData)
 
             await axios.post('/api/generateAssistant', assistantData);
             console.log('Assistant data updated:', assistantData);
@@ -149,22 +145,6 @@ const GenerteAssistant: React.FC = () => {
             }
         }
     };
-
-    // const handleSubmit = async (e: FormEvent) => {
-    //     e.preventDefault();
-    //     console.log(formData)
-    //     try {
-    //         const response = await axios.post('/api/generateAssistant', formData);
-    //         console.log('Form submitted:', formData);
-    //     } catch (error) {
-    //         if (axios.isAxiosError(error)) {
-    //             const axiosError = error as AxiosError;
-    //             console.error('Generating error:', axiosError.response?.data || axiosError.message);
-    //         } else {
-    //             console.error('An unexpected error occurred:', error);
-    //         }
-    //     }
-    // };
 
     return (
         <>

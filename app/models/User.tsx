@@ -2,9 +2,8 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 interface IAssistant {
     assistant_id: string;
-    // specialSkills: string[];
+    name : string;
     backStory: string;
-    // fileUrl?: string;
 }
 
 interface IUser extends Document {
@@ -14,9 +13,9 @@ interface IUser extends Document {
 }
 
 const AssistantSchema = new Schema<IAssistant>({
-    assistant_id: { type: String },
+    assistant_id: { type: String, required: true },
+    name:{ type: String, required: true },
     backStory: { type: String, required: true },
-    // fileUrl: { type: String },
 });
 
 const UserSchema = new Schema<IUser>({
