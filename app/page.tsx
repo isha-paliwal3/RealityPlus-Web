@@ -44,7 +44,7 @@ export default function Home() {
           </div>
 
           <div className="section md:flex flex-col gap-10 items-center font-Raleway w-[100%] lg:px-20 mt-20 mb-20">
-            <Image  width={400} height={200} className="md:w-[35%] mb-10 md:mb-0" src="/signup.jpg" alt="Img" />
+            <Image  width={400} height={200} className="md:w-[35%] mb-10 md:mb-0" src="/Signup.jpg" alt="Img" />
             <h5 className="text-900 text-2xl md:text-4xl lg:text-4xl xl:text-6xl text-center">Ready to explore your digitally enhanced reality? Jump right in!</h5>
             <div className="flex justify-center gap-10 flex-col md:flex-row">
               <Link href="/signup">
