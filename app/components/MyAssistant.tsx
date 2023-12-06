@@ -13,6 +13,8 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import ChatIcon from '@mui/icons-material/Chat';
 import VideoChatIcon from '@mui/icons-material/VideoChat';
+import ChatModal from './ChatModal';
+import { Assistant } from 'next/font/google';
 
 const Item = styled(Paper)(() => ({
     backdropFilter: 'blur(16px) saturate(180%)',
@@ -55,15 +57,27 @@ interface UserData {
     assistants: Assistant[];
 }
 
+interface AssistantData {
+    assistant_id: string;
+    name: string;
+}
+
 const MyAssistant: React.FC = () => {
 
     const [user, setUser] = useState('');
+    const [isChatActive, setIsChatActive] = useState<boolean>(false);
+    const handleOpenChat = () => setIsChatActive(true);
+    const handleCloseChat = () => setIsChatActive(false);
     const [userData, setUserData] = useState<UserData>({
         _id: '',
         email: '',
         password: '',
         __v: 0,
         assistants: [],
+    });
+    const [assistantData, setAssistantData] = useState<AssistantData>({
+        name: '',
+        assistant_id: '',
     });
 
     useEffect(() => {
@@ -95,11 +109,16 @@ const MyAssistant: React.FC = () => {
         fetchUserData();
     }, [user]);
 
-    const handleChat = () =>{
-
+    const handleChat = (name: string, assistant_id: string) =>{
+        setAssistantData({
+            name: name,
+            assistant_id: assistant_id
+        });
+        handleOpenChat();
     }
     return (
         <div >
+           {isChatActive && <ChatModal isChatActive={isChatActive} handleCloseChat={handleCloseChat} assistantData={assistantData} setAssistantData={setAssistantData} />}
             {userData.assistants.map((assistant) => (
                 <Box key={assistant._id} maxWidth={{ xs: 300, sm: 'unset' }} sx={{ flexGrow: 1, overflow: 'hidden', px: 3 }} >
                     <Item
@@ -123,7 +142,7 @@ const MyAssistant: React.FC = () => {
                             </Stack>
                             <Stack spacing={2} className='md:gap-10' direction="row" alignItems="center" >
                                 <button className='text-lg flex items-center gap-2'><span className='hidden md:block'>Talk</span> <VideoChatIcon /></button>
-                                <button className='text-lg flex items-center gap-2' onClick={handleChat}><span className='hidden md:block'>Chat</span> <ChatIcon /></button>
+                                <button className='text-lg flex items-center gap-2' onClick={() => handleChat(assistant.name, assistant.assistant_id)}><span className='hidden md:block'>Chat</span> <ChatIcon /></button>
                             </Stack>
                         </Stack>
                     </Item>

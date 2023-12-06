@@ -2,3 +2,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: rgb(8, 7, 51);
+    border-radius: 12px;
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background-color: rgb(102, 100, 136);
+    border-radius: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgb(17, 48, 88);
+}
