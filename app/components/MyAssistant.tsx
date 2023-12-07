@@ -15,6 +15,8 @@ import ChatIcon from '@mui/icons-material/Chat';
 import VideoChatIcon from '@mui/icons-material/VideoChat';
 import ChatModal from './ChatModal';
 import { Assistant } from 'next/font/google';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const Item = styled(Paper)(() => ({
     backdropFilter: 'blur(16px) saturate(180%)',
@@ -92,6 +94,7 @@ const MyAssistant: React.FC = () => {
 
     useEffect(() => {
         if (!user) return;
+        setIsLoading(true); 
         const fetchUserData = async () => {
             try {
                 const response = await axios.get('/api/myAssistant', { params: { user } });
@@ -104,6 +107,8 @@ const MyAssistant: React.FC = () => {
                     console.error('An unexpected error occurred:', error);
                 }
             }
+            setIsLoading(false); 
+
         };
 
         fetchUserData();
@@ -116,10 +121,15 @@ const MyAssistant: React.FC = () => {
         });
         handleOpenChat();
     }
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     return (
         <div >
            {isChatActive && <ChatModal isChatActive={isChatActive} handleCloseChat={handleCloseChat} assistantData={assistantData} setAssistantData={setAssistantData} />}
-            {userData.assistants.map((assistant) => (
+           {isLoading ? (
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <CircularProgress />
+            </div>
+        ) : (userData.assistants.map((assistant) => (
                 <Box key={assistant._id} maxWidth={{ xs: 300, sm: 'unset' }} sx={{ flexGrow: 1, overflow: 'hidden', px: 3 }} >
                     <Item
                         sx={{
@@ -147,7 +157,7 @@ const MyAssistant: React.FC = () => {
                         </Stack>
                     </Item>
                 </Box>
-            ))}
+            )))}
         </div>
     );
 }

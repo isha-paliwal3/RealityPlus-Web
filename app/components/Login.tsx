@@ -3,8 +3,10 @@
 import React, { useState, FormEvent, useContext } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { AuthContext } from '../context/authContext'; 
+import { AuthContext } from '../context/authContext';
 import Link from "next/link";
+import CircularProgress from '@mui/material/CircularProgress';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface LoginForm {
     email: string;
@@ -13,8 +15,9 @@ interface LoginForm {
 
 const Login: React.FC = () => {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [formData, setFormData] = useState<LoginForm>({ email: '', password: '' });
-    const { updateAuth } = useContext(AuthContext); 
+    const { updateAuth } = useContext(AuthContext);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -26,6 +29,7 @@ const Login: React.FC = () => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             const response = await axios.post('/api/login', formData);
             console.log('Login successful:', response.data);
@@ -35,10 +39,13 @@ const Login: React.FC = () => {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError;
                 console.error('Login error:', axiosError.response?.data || axiosError.message);
+                toast.error("An error occurred, Please Try Again with correct Email or password");
             } else {
                 console.error('An unexpected error occurred:', error);
+                toast.error("An error occurred, Please Try Again");
             }
         }
+        setIsLoading(false);
     };
 
     return (
@@ -81,6 +88,12 @@ const Login: React.FC = () => {
                     <p className='text-center p-2'>Don&apos;t Have an Account? <Link href='/signup' className='underline'>SignUp</Link></p>
                 </div>
             </form>
+            {isLoading && (
+                <div className="loader-container">
+                    <CircularProgress />
+                </div>
+            )}
+            <ToastContainer />
         </>
     );
 };

@@ -5,6 +5,8 @@ import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '../context/authContext';
 import Link from "next/link";
+import CircularProgress from '@mui/material/CircularProgress';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface SignUpForm {
     firstName: string;
@@ -15,7 +17,8 @@ interface SignUpForm {
 
 const SignUpPage: React.FC = () => {
     const router = useRouter();
-    const { updateAuth } = useContext(AuthContext); 
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { updateAuth } = useContext(AuthContext);
     const [formData, setFormData] = useState<SignUpForm>({
         firstName: '',
         lastName: '',
@@ -34,7 +37,7 @@ const SignUpPage: React.FC = () => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log(formData)
+        setIsLoading(true);
         try {
             const response = await axios.post('/api/signup', formData);
             console.log('Signup successful:', response.data);
@@ -44,10 +47,13 @@ const SignUpPage: React.FC = () => {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError;
                 console.error('Signup error:', axiosError.response?.data || axiosError.message);
+                toast.error(axiosError.message + "Please Try Again with correct Email or password");
             } else {
                 console.error('An unexpected error occurred:', error);
+                toast.error("An error occurred, Please Try Again");
             }
         }
+        setIsLoading(false);
     };
 
     return (
@@ -113,9 +119,13 @@ const SignUpPage: React.FC = () => {
                     <p className='text-center p-2'>Already Have an Account? <Link href='/login' className='underline'> Login</Link></p>
                 </div>
             </form>
+            {isLoading && (
+                <div className="loader-container">
+                    <CircularProgress />
+                </div>
+            )}
+            <ToastContainer />
         </>
-
-
     );
 };
 

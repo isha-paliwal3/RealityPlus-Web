@@ -21,7 +21,8 @@ const config: Config = {
         'orng':{
          100: '#FE6B03',
          200: '#ff862e'
-        } 
+        } ,
+        'customBlue': '#468EC1', 
       },
 
       screens: {

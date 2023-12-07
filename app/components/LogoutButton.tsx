@@ -1,14 +1,16 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 interface LogoutButtonProps {
-    onLogout: () => void; // Callback function to handle any additional actions after logout
+    onLogout: () => void;
 }
 
 const LogoutButton: React.FC<LogoutButtonProps> = ({ onLogout }) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleLogout = async () => {
+        setIsLoading(true);
         try {
-            const response = await fetch('/api/logout', { 
+            const response = await fetch('/api/logout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -23,12 +25,19 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({ onLogout }) => {
         } catch (error) {
             console.error('There was an error logging out', error);
         }
+        setIsLoading(false);
     };
 
-    return (
+    return (<div  className="flex items-center justify-center">
         <button onClick={handleLogout}>
             Logout
         </button>
+        {isLoading && (
+            <div className="loader-container">
+                <CircularProgress />
+            </div>
+        )}
+    </div>
     );
 };
 
