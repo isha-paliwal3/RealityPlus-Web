@@ -137,7 +137,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ handleCloseChat, isChatActive, as
             try {
                 const response = await axios.post(
                     // 'https://reality-plus-flask.vercel.app/chat',
-                    'http://192.168.1.16:5000/chat',
+                    'https://192.168.1.16:5000/chat',
                     {
                         message: currentMessage,
                         thread_id: assistantData.thread_id,
