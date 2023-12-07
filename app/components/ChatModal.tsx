@@ -215,7 +215,8 @@ const ChatModal: React.FC<ChatModalProps> = ({ handleCloseChat, isChatActive, as
                                 onKeyPress={handleKeyPress}
                                 disabled={isProcessing}
                                 placeholder="Type a message"
-                                className='absolute bottom-5 rounded-lg bg-fuchsia-50 max-w-[92%] md:max-w-[55%] color-black hover:outline-none'
+                                style={{ position: 'absolute', bottom: '20px', borderRadius: '10px', color: 'black' }}
+                                className='bg-fuchsia-50 max-w-[92%] md:max-w-[55%] color-black hover:outline-none'
                                 inputProps={{
                                     style: { color: '#000', fontSize: '16px' }
                                 }}
