@@ -49,8 +49,8 @@ const Nav: React.FC = () => {
         <li className="my-1 hover:underline transition duration-300 ease-in-out transform hover:scale-105"><Link href="/">Home</Link></li>
         {isLoggedIn === true ? (
           <>
-            <li className="my-1 hover:underline transition duration-300 ease-in-out transform hover:scale-105"><Link href="/generateAssistant">create Assistant</Link></li>
-            <li className="my-1 hover:underline transition duration-300 ease-in-out transform hover:scale-105"><Link href="/myAssistants">my Assistants</Link></li>
+            <li className="my-1 hover:underline transition duration-300 ease-in-out transform hover:scale-105"><Link href="/generateAssistant">Create Assistant</Link></li>
+            <li className="my-1 hover:underline transition duration-300 ease-in-out transform hover:scale-105"><Link href="/myAssistants">My Assistants</Link></li>
             <li className="my-1 hover:underline transition duration-300 ease-in-out transform hover:scale-105">
               <LogoutButton onLogout={handleLogout} />
             </li>

@@ -147,9 +147,16 @@ const ChatModal: React.FC<ChatModalProps> = ({ handleCloseChat, isChatActive, as
                     timeout: veryLongTimeout
                 });
 
-                const replyMessage = response.data;
-                console.log(replyMessage);
-                setMessages(prevMessages => [...prevMessages, { text: replyMessage, isCurrentUser: false }]);
+            let responseText = await response.data.split('```json\n')[1].split('\n```')[0].trim();
+            responseText = responseText.replace(/```json|```/g, '').trim();
+
+            const responseData = JSON.parse(responseText);
+
+            responseData.forEach((item:any) => {
+                if (item.text) {
+                    setMessages(prevMessages => [...prevMessages, { text: item.text, isCurrentUser: false }]);
+                }
+            });
             } catch (error) {
                 console.error('Error sending message:', error);
                 toast.error("An error occurred while sending the message. Please Try Again");
