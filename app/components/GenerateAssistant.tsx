@@ -51,7 +51,7 @@ const GenerteAssistant: React.FC = () => {
         };
 
         try {
-            const response = await axios.post('https://reality-plus-flask.vercel.app/createAssistant', payload);
+            const response = await axios.post(`http://127.0.0.1:5000/createAssistant`, payload);
             console.log('Form submitted:', payload);
 
             const assistant_id = response.data.assistant_id;

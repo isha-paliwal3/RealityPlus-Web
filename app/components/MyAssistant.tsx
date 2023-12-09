@@ -16,6 +16,9 @@ import VideoChatIcon from '@mui/icons-material/VideoChat';
 import ChatModal from './ChatModal';
 import { Assistant } from 'next/font/google';
 import CircularProgress from '@mui/material/CircularProgress';
+import Link from 'next/link';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+
 
 
 const Item = styled(Paper)(() => ({
@@ -65,7 +68,8 @@ interface AssistantData {
 }
 
 const MyAssistant: React.FC = () => {
-
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
     const [user, setUser] = useState('');
     const [isChatActive, setIsChatActive] = useState<boolean>(false);
     const handleOpenChat = () => setIsChatActive(true);
@@ -81,6 +85,14 @@ const MyAssistant: React.FC = () => {
         name: '',
         assistant_id: '',
     });
+
+    const router = useRouter();
+
+    const handleTalk = async (assistant_id: string) => {
+        // Construct the URL string manually
+        const talkPath = `/Talk?assistant_id=${encodeURIComponent(assistant_id)}`;
+        router.push(talkPath);
+    };
 
     useEffect(() => {
         const token = Cookies.get('token');
@@ -151,7 +163,7 @@ const MyAssistant: React.FC = () => {
                                 <Typography className='text-lg' noWrap>{assistant.name}</Typography>
                             </Stack>
                             <Stack spacing={2} className='md:gap-10' direction="row" alignItems="center" >
-                                <button className='text-lg flex items-center gap-2'><span className='hidden md:block'>Talk</span> <VideoChatIcon /></button>
+                                <button onClick={() => handleTalk(assistant.assistant_id)} className='text-lg flex items-center gap-2'><span className='hidden md:block' >Talk</span> <VideoChatIcon /></button>
                                 <button className='text-lg flex items-center gap-2' onClick={() => handleChat(assistant.name, assistant.assistant_id)}><span className='hidden md:block'>Chat</span> <ChatIcon /></button>
                             </Stack>
                         </Stack>

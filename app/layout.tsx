@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import Nav from './components/Nav';
 import Head from 'next/head';
 import { AuthProvider } from './context/authContext';
+import { ChatProvider } from "./hooks/useChat";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
+        <ChatProvider>
       <html lang="en">
         <Head>
           <title>RealityPlus</title>
@@ -26,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </body>
       </html>
+      </ChatProvider>
     </AuthProvider>
   );
 }

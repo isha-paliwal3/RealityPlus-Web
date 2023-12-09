@@ -47,7 +47,7 @@ interface ChatModalProps {
 }
 
 const Message = memo(({ text, isCurrentUser }: ChatMessage) => {
-    const userAvatarSrc = "/path/to/assistant/avatar.jpg";
+    const userAvatarSrc = "";
     const assistantAvatarSrc = "/bot.png";
 
     return (
@@ -84,7 +84,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ handleCloseChat, isChatActive, as
             };
 
             try {
-                const response = await axios.post('https://reality-plus-flask.vercel.app/start', payload, {
+                const response = await axios.post(`http://127.0.0.1:5000/start`, payload, {
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -137,7 +137,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ handleCloseChat, isChatActive, as
             try {
                 const response = await axios.post(
                     // 'https://reality-plus-flask.vercel.app/chat',
-                    'https://192.168.1.16:5000/chat',
+                    `http://127.0.0.1:5000/chat`,
                     {
                         message: currentMessage,
                         thread_id: assistantData.thread_id,
@@ -178,13 +178,16 @@ const ChatModal: React.FC<ChatModalProps> = ({ handleCloseChat, isChatActive, as
                 aria-labelledby="chat-modal-title"
                 aria-describedby="chat-modal-description"
             >
-                <Box className='custom-scrollbar' sx={style} style={{
-                    backdropFilter: 'blur(16px) saturate(180%)',
-                    backgroundColor: ' rgb(23 27 34 / 60%)',
-                    borderRadius: '12px',
-                    color: '#fff',
-                    border: '1px solid rgba(255, 255, 255, 0.125)',
-                }}>
+                
+                <Box className='custom-scrollbar' 
+                    sx={style} 
+                    style={{
+                        backdropFilter: 'blur(16px) saturate(180%)',
+                        backgroundColor: ' rgb(23 27 34 / 60%)',
+                        borderRadius: '12px',
+                        color: '#fff',
+                        border: '1px solid rgba(255, 255, 255, 0.125)'
+                    }}>
                     <button className='float-right' onClick={handleCloseChat}><CloseIcon /></button>
                     <Typography id="keep-mounted-modal-title" variant="h5" component="h2">
                         {assistantData.name}
